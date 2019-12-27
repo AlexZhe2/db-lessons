@@ -3,7 +3,29 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
-    <persistence-unit name="">
+    <persistence-unit name="ormLesson" transaction-type="RESOURCE_LOCAL">
 
+        <properties>
+            <!--строка подключения к бд-->
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:postgresql://localhost:5432/ifmo_lessons"/>
+            <!--логин пользователя бд-->
+            <property name="javax.persistence.jdbc.user" value="ifmo"/>
+            <!-- пароль пользователя бд-->
+            <property name="javax.persistence.jdbc.password" value="ifmo"/>
+            <!--используемый драйвер-->
+            <property name="javax.persistence.jdbc.driver"
+                      value="org.postgresql.Driver"/>
+
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.ddl-generation"
+                      value="drop-and-create-tables"/>
+<!--            none-->
+<!--            create-tables-->
+<!--            настройки для пула соединений-->
+            <property name="eclipselink.connection-pool.default.initial" value="5"/>
+            <property name="eclipselink.connection-pool.default.min" value="3"/>
+            <property name="eclipselink.connection-pool.default.max" value="10"/>
+        </properties>
     </persistence-unit>
 </persistence>
