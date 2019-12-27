@@ -5,6 +5,8 @@
 
     <persistence-unit name="ormLesson" transaction-type="RESOURCE_LOCAL">
 
+        <class>jpa.entity.TextMessage</class>
+
         <properties>
             <!--строка подключения к бд-->
             <property name="javax.persistence.jdbc.url"
