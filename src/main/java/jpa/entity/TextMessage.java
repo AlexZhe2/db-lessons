@@ -2,12 +2,14 @@ package jpa.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Calendar;
 
 @Entity
 @Table(name = "message")
+@ToString
 public class TextMessage extends BaseIdentify{
 
     @Getter
