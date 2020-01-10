@@ -10,6 +10,9 @@ import java.util.List;
 @Table(name = "ifmo_group")
 @NoArgsConstructor
 @RequiredArgsConstructor
+@NamedQueries({
+   @NamedQuery(name = "Group.getAll", query = "SELECT g FROM Group g")
+})
 public class Group extends BaseIdentify{
     @Getter
     @Setter
