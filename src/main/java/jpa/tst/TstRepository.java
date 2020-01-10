@@ -70,14 +70,6 @@ public class TstRepository {
         manager.getTransaction().commit();
 
 
-
-
-
-
-
-
-
-
         System.out.println("получение всех групп");
         List<Group> groupList = groupRepository.getAll();
         for (Group group: groupList){

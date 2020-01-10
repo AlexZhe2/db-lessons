@@ -3,7 +3,11 @@ package jpa.repository;
 import jpa.entity.Group;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class GroupRepository implements Repository<Group, Integer> {
@@ -40,9 +44,23 @@ public class GroupRepository implements Repository<Group, Integer> {
     @Override
     public List<Group> getAll() {
         /*1. named queries*/
-        TypedQuery<Group> query =
+        /*TypedQuery<Group> query =
                 manager.createNamedQuery("Group.getAll", Group.class);
-        List<Group> groups = query.getResultList();
+        List<Group> groups = query.getResultList();*/
+
+        /*2. JPQL */
+        /*Query query = manager.createQuery("SELECT g FROM Group g");
+        List<Group> groups = (List<Group>) query.getResultList();*/
+
+        /*3. Criteria API*/
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<Group> criteriaQuery =
+                criteriaBuilder.createQuery(Group.class);
+        Root<Group> root = criteriaQuery.from(Group.class); // from Group
+        criteriaQuery.select(root);
+
+        TypedQuery<Group> typedQuery = manager.createQuery(criteriaQuery);
+        List<Group> groups = typedQuery.getResultList();
 
         return groups;
     }
