@@ -3,6 +3,7 @@ package jpa.repository;
 import jpa.entity.Group;
 import jpa.entity.Group_;
 import jpa.entity.Student;
+import jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -117,4 +118,8 @@ public class GroupRepository implements Repository<Group, Integer> {
         return manager.createQuery(criteriaQuery).getSingleResult();
     }
 
+    @Override
+    public List<Group> getBySpecification(Specification specification) {
+        return null;
+    }
 }

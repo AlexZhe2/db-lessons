@@ -79,6 +79,8 @@ public class TstRepository {
         Group groupByName = groupRepository.getGroupByName("JJD");
         System.out.println("groupByName: " + groupByName.getDuration());
 
+        System.out.println(groupRepository.studentsCount("JJD"));
+
         manager.close();
         factory.close();
     }

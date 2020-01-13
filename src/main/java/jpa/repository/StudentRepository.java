@@ -1,8 +1,13 @@
 package jpa.repository;
 
 import jpa.entity.Student;
+import jpa.specification.Specification;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class StudentRepository implements Repository<Student, Integer> {
@@ -35,5 +40,19 @@ public class StudentRepository implements Repository<Student, Integer> {
     @Override
     public List<Student> getAll() {
         return null;
+    }
+
+    @Override
+    public List<Student> getBySpecification(Specification specification) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<Student> criteriaQuery =
+                criteriaBuilder.createQuery(Student.class);
+        Root<Student> root = criteriaQuery.from(Student.class);
+
+        Predicate condition = specification.toPredicate(root, criteriaBuilder);
+
+        criteriaQuery.where(condition);
+
+        return manager.createQuery(criteriaQuery).getResultList();
     }
 }
