@@ -12,6 +12,11 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Cache(
+        type = CacheType.SOFT,
+        expiry = 360000, // 6 min
+        size = 64000
+)
 public class Student extends BaseIdentify {
 
     @Getter

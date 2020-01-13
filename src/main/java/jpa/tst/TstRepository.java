@@ -18,6 +18,8 @@ public class TstRepository {
                 Persistence.createEntityManagerFactory("ormLesson");
         EntityManager manager = factory.createEntityManager();
 
+//        manager.clear();
+
         GroupRepository groupRepository = new GroupRepository(manager);
         StudentRepository studentRepository = new StudentRepository(manager);
 
