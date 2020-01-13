@@ -64,4 +64,11 @@ public class GroupRepository implements Repository<Group, Integer> {
 
         return groups;
     }
+
+    public Group getGroupByName(String groupName){
+        /*1. named query*/
+
+    }
+
+
 }

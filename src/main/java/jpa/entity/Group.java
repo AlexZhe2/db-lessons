@@ -11,7 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @NamedQueries({
-   @NamedQuery(name = "Group.getAll", query = "SELECT g FROM Group g")
+   @NamedQuery(name = "Group.getAll", query = "SELECT g FROM Group g"),
+   @NamedQuery(name = "Group.findByNAme",
+           query = "SELECT g FROM Group g WHERE g.groupName = :groupName")
 })
 public class Group extends BaseIdentify{
     @Getter
