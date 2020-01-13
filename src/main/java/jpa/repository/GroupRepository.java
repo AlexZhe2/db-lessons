@@ -120,6 +120,15 @@ public class GroupRepository implements Repository<Group, Integer> {
 
     @Override
     public List<Group> getBySpecification(Specification specification) {
-        return null;
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<Group> criteriaQuery =
+                criteriaBuilder.createQuery(Group.class);
+        Root<Group> root = criteriaQuery.from(Group.class);
+
+        Predicate condition = specification.toPredicate(root, criteriaBuilder);
+
+        criteriaQuery.where(condition);
+
+        return manager.createQuery(criteriaQuery).getResultList();
     }
 }

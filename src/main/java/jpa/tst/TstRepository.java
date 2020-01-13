@@ -5,6 +5,7 @@ import jpa.entity.Group;
 import jpa.entity.Student;
 import jpa.repository.GroupRepository;
 import jpa.repository.StudentRepository;
+import jpa.specification.StudentWithoutContact;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -80,6 +81,13 @@ public class TstRepository {
         System.out.println("groupByName: " + groupByName.getDuration());
 
         System.out.println(groupRepository.studentsCount("JJD"));
+
+        System.out.println("Студенты без контактной информации");
+        List<Student> nullContacts =
+                studentRepository.getBySpecification(new StudentWithoutContact());
+        for (Student student: nullContacts){
+            System.out.println(student.getEmail());
+        }
 
         manager.close();
         factory.close();
