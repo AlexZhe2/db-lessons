@@ -1,13 +1,13 @@
 package jpa.repository;
 
 import jpa.entity.Group;
+import jpa.entity.Group_;
+import jpa.entity.Student;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class GroupRepository implements Repository<Group, Integer> {
@@ -67,8 +67,54 @@ public class GroupRepository implements Repository<Group, Integer> {
 
     public Group getGroupByName(String groupName){
         /*1. named query*/
+       /* TypedQuery<Group> query =
+                manager.createNamedQuery("Group.findByNAme", Group.class);
+        query.setParameter("groupName", groupName);
+        Group group = query.getSingleResult();*/
 
+        /*2. JPQL */
+       /* TypedQuery<Group> query = manager.createQuery(
+             "SELECT g FROM Group g WHERE g.groupName = :groupName",
+               Group.class);
+        query.setParameter("groupName", groupName);
+        Group group = query.getSingleResult();*/
+
+       /*Criteria API*/
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<Group> criteriaQuery =
+                criteriaBuilder.createQuery(Group.class);
+        // блок from
+        Root<Group> root = criteriaQuery.from(Group.class);
+        // блок where
+        Predicate condition =
+                criteriaBuilder.equal(root.get(Group_.groupName), groupName);
+
+        criteriaQuery.select(root).where(condition);
+
+        TypedQuery<Group> query = manager.createQuery(criteriaQuery);
+        Group group = query.getSingleResult();
+
+        return group;
     }
 
+    // количество студентов в группе
+    public long studentsCount(String groupName){
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery =
+                criteriaBuilder.createQuery(Long.class);
+
+        Root<Group> root = criteriaQuery.from(Group.class);
+
+        Join<Group, Student> groupStudent = root.join(Group_.students);
+
+        Predicate condition =
+                criteriaBuilder.equal(root.get(Group_.groupName), groupName);
+
+        criteriaQuery.select(criteriaBuilder.count(groupStudent))
+                .where(condition)
+                .groupBy(root.get("id")); // Group_.id
+
+        return manager.createQuery(criteriaQuery).getSingleResult();
+    }
 
 }

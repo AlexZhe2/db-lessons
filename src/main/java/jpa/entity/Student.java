@@ -1,6 +1,9 @@
 package jpa.entity;
 
 import lombok.*;
+import org.eclipse.persistence.annotations.Cache;
+import org.eclipse.persistence.annotations.CacheCoordinationType;
+import org.eclipse.persistence.annotations.CacheType;
 
 import javax.persistence.*;
 import java.util.ArrayList;

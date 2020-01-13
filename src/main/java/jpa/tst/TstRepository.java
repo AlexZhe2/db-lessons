@@ -76,7 +76,8 @@ public class TstRepository {
             System.out.println(group.getGroupName());
         }
 
-
+        Group groupByName = groupRepository.getGroupByName("JJD");
+        System.out.println("groupByName: " + groupByName.getDuration());
 
         manager.close();
         factory.close();
